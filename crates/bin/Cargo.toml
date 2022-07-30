@@ -1,0 +1,14 @@
+[package]
+name = "bin"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+lib = { path = "../lib" }
+
+libloading = { version = "^0.7", optional = true }
+notify = { version = "^4", optional = true }
+
+[features]
+default = ["reload"]
+reload = ["dep:libloading", "dep:notify"]
