@@ -19,7 +19,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         lib.update().expect("lib update");
 
         #[cfg(feature = "reload")]
-        lib.step(&mut state)?;
+        lib.step(&mut state);
 
         #[cfg(not(feature = "reload"))]
         lib::step(state);
