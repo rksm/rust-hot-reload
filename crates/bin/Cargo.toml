@@ -5,10 +5,8 @@ edition = "2021"
 
 [dependencies]
 lib = { path = "../lib" }
-
-libloading = { version = "^0.7", optional = true }
-notify = { version = "^4", optional = true }
+hot-lib-reloader = { version = "*", optional = true }
 
 [features]
 default = ["reload"]
-reload = ["dep:libloading", "dep:notify"]
+reload = ["dep:hot-lib-reloader"]
