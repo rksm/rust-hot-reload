@@ -3,7 +3,7 @@ _Use with `cargo generate rksm/rust-hot-reload`._
 
 # {{project-name}}
 
-A workflow for quick feedback while writing Rust! See https://robert.kra.hn/posts/hot-reloading-rust.html for more.
+A workflow for quick feedback while writing Rust! See https://robert.kra.hn/posts/hot-reloading-rust/ and https://crates.io/crates/hot-lib-reloader for more info.
 
 ## Usage
 
@@ -12,17 +12,18 @@ A workflow for quick feedback while writing Rust! See https://robert.kra.hn/post
 For development use two terminals and run the binary
 
 ```shell
-cargo watch -w 'crates/bin' -x 'run --features reload'
+$ cargo watch -i lib -x 'run --features reload'
 ```
 
 and (re-)build the lib
 
 ```shell
-cargo watch -w crates/lib -x build
+$ cargo watch -w lib -x 'build -p lib'
 ```
 
-### Statically build for release
+### Statically build or run for release
 
 ```shell
 cargo build --release
+cargo run --release
 ```
