@@ -8,7 +8,7 @@ hot_lib_reloader::define_lib_reloader! {
     }
 }
 
-fn main() -> Result<(), Box<dyn Error>> {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut state = State::default();
 
     #[cfg(feature = "reload")]
