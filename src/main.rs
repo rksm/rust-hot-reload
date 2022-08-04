@@ -1,28 +1,30 @@
-use lib::State;
-use std::error::Error;
+use lib::*;
 
 #[cfg(feature = "reload")]
-hot_lib_reloader::define_lib_reloader!(
-    MyLibLoader("target/debug", "lib") {
-        fn step(arg: &mut State) -> ();
+hot_lib_reloader::define_lib_reloader! {
+    unsafe MyLibLoader {
+        lib_name: "lib",
+        source_files: ["../lib/src/lib.rs"]
     }
-);
+}
 
 fn main() -> Result<(), Box<dyn Error>> {
-    #[cfg(feature = "reload")]
-    let mut lib = MyLibLoader::new().expect("init lib loader");
-
     let mut state = State::default();
+
+    #[cfg(feature = "reload")]
+    let mut lib = MyLibLoader::new()?;
 
     loop {
         #[cfg(feature = "reload")]
-        lib.update().expect("lib update");
+        lib.update()?;
 
         #[cfg(feature = "reload")]
         lib.step(&mut state);
 
         #[cfg(not(feature = "reload"))]
-        lib::step(state);
+        lib::step(&mut state);
+
+        dbg!(&state);
 
         std::thread::sleep(std::time::Duration::from_secs(1));
     }
