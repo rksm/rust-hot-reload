@@ -9,17 +9,14 @@ A workflow for quick feedback while writing Rust! See https://robert.kra.hn/post
 
 ### Hot reload for development
 
-For development use two terminals and run the binary
+For development use two terminals to run the binary and (re-)build the lib:
 
 ```shell
 $ cargo watch -i lib -x 'run --features reload'
-```
-
-and (re-)build the lib
-
-```shell
 $ cargo watch -w lib -x 'build -p lib'
 ```
+
+With [cargo runcc](https://crates.io/crates/runcc) you just need to run `cargo runcc -c runcc.yml`.
 
 ### Statically build or run for release
 
