@@ -4,6 +4,6 @@ pub struct State {
 }
 
 #[no_mangle]
-pub extern "C" fn step(state: &mut State) {
+pub fn step(state: &mut State) {
     state.called += 1;
 }
