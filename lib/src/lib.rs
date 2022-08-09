@@ -1,9 +1,9 @@
 #[derive(Default, Debug)]
 pub struct State {
-    pub called: usize,
+    pub counter: usize,
 }
 
 #[no_mangle]
 pub fn step(state: &mut State) {
-    state.called += 1;
+    state.counter += 1;
 }

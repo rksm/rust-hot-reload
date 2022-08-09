@@ -13,5 +13,5 @@ lib = { path = "./lib" }
 hot-lib-reloader = { version = "^0.5", optional = true }
 
 [features]
-default = ["reload"]
+default = []
 reload = ["dep:hot-lib-reloader"]

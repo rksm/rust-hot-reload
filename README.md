@@ -3,7 +3,7 @@ _Use with `cargo generate rksm/rust-hot-reload`._
 
 # {{project-name}}
 
-A workflow for quick feedback while writing Rust! See https://robert.kra.hn/posts/hot-reloading-rust/ and https://crates.io/crates/hot-lib-reloader for more info.
+A workflow for quick feedback while writing Rust! See https://github.com/rksm/hot-lib-reloader-rs and https://robert.kra.hn/posts/hot-reloading-rust/ for more info.
 
 ## Usage
 
