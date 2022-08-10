@@ -7,7 +7,14 @@ use lib::*;
 #[hot_lib_reloader::hot_module(dylib = "lib")]
 mod hot_lib {
     pub use lib::State;
+
+    // get all public #[no_mangle] functions from that file and generate
+    // functions with the same signatures that are hot-reloadable.
     hot_functions_from_file!("../lib/src/lib.rs");
+
+    // expose a type to subscribe to lib load events
+    #[lib_change_subscription]
+    pub fn subscribe() -> hot_lib_reloader::LibReloadObserver {}
 }
 
 fn main() {
@@ -15,6 +22,14 @@ fn main() {
     loop {
         step(&mut state);
         dbg!(&state);
-        std::thread::sleep(std::time::Duration::from_secs(1));
+
+        println!("waiting for library change...");
+        // Wait until a library change happens (but the old lib is still loader)
+        let token = hot_lib::subscribe().wait_for_about_to_reload();
+        // while token exists, reload is blocked
+        drop(token);
+
+        // wait for reload to be done
+        hot_lib::subscribe().wait_for_reload();
     }
 }
