@@ -10,11 +10,15 @@ mod hot_lib {
 
     // get all public #[no_mangle] functions from that file and generate
     // functions with the same signatures that are hot-reloadable.
-    hot_functions_from_file!("../lib/src/lib.rs");
+    hot_functions_from_file!("lib/src/lib.rs");
 
     // expose a type to subscribe to lib load events
     #[lib_change_subscription]
     pub fn subscribe() -> hot_lib_reloader::LibReloadObserver {}
+
+    // a monotonically increasing counter (starting with 0) that counts library reloads
+    #[lib_version]
+    pub fn version() -> usize {}
 }
 
 fn main() {
@@ -31,5 +35,6 @@ fn main() {
 
         // wait for reload to be done
         hot_lib::subscribe().wait_for_reload();
+        println!("... library has been reloaded {} times", hot_lib::version());
     }
 }
