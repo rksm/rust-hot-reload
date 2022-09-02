@@ -27,14 +27,19 @@ fn main() {
         step(&mut state);
         dbg!(&state);
 
-        println!("waiting for library change...");
-        // Wait until a library change happens (but the old lib is still loader)
-        let token = hot_lib::subscribe().wait_for_about_to_reload();
-        // while token exists, reload is blocked
-        drop(token);
+        #[cfg(not(feature = "reload"))]
+        break;
+        #[cfg(feature = "reload")]
+        {
+            println!("waiting for library change...");
+            // Wait until a library change happens (but the old lib is still loader)
+            let token = hot_lib::subscribe().wait_for_about_to_reload();
+            // while token exists, reload is blocked
+            drop(token);
 
-        // wait for reload to be done
-        hot_lib::subscribe().wait_for_reload();
-        println!("... library has been reloaded {} times", hot_lib::version());
+            // wait for reload to be done
+            hot_lib::subscribe().wait_for_reload();
+            println!("... library has been reloaded {} times", hot_lib::version());
+        }
     }
 }
